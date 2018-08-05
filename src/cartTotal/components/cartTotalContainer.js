@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { initializeItems as initializeItemsAction } from '../../itemDetails/actions/actions';
 
 import LineItem from './cartLineItem';
-import { ItemDetailsContainer } from '../../itemDetails/components/itemDetailsContainer';
+import ItemDetailsContainer from '../../itemDetails/components/itemDetailsContainer';
 
 class CartTotal extends Component {
   constructor(props) {
@@ -59,6 +59,15 @@ class CartTotal extends Component {
   render() {
     console.log('rendering CartTotal');
     let subTotal = this.getSubtotal();
+    let total = 0;
+    if (this.props.promocode) {
+      total =
+        subTotal +
+        this.state.taxNfees -
+        (this.state.pickupSavings + subTotal * 0.1);
+    } else {
+      total = subTotal + this.state.taxNfees - this.state.pickupSavings;
+    }
     let toolTip =
       'Pick up your order in the store help cut costs, and we pass the savings on to you.';
     return (
@@ -82,8 +91,8 @@ class CartTotal extends Component {
           description={'Promo Code discount'}
           amount={
             this.props.promocode === false
-              ? (subTotal * 0.1).toFixed(2)
-              : (0.0).toFixed(2)
+              ? (0.0).toFixed(2)
+              : (subTotal * 0.1).toFixed(2)
           }
           textDecoration={false}
           showToolTip={false}
@@ -99,7 +108,7 @@ class CartTotal extends Component {
         <hr />
         <LineItem
           description={'Total'}
-          amount={subTotal + this.state.taxNfees - this.state.pickupSavings}
+          amount={total}
           textDecoration={false}
           showToolTip={false}
           bold={true}
@@ -115,6 +124,9 @@ function mapStateToProps(state) {
   console.log(state);
   let promocode = _.get(state, 'couponCode.validPromoCode') || false;
   let itemsList = _.get(state, 'itemsList.items');
+  if (!itemsList) {
+    itemsList = _.get(state, 'itemsList.state.items');
+  }
   return {
     promocode,
     itemsList

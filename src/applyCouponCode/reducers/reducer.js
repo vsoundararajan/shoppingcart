@@ -1,4 +1,4 @@
-//import _ from 'lodash';
+import _ from 'lodash';
 import * as actionTypes from '../constants/action-types';
 
 const initialState = {
@@ -9,11 +9,18 @@ const initialState = {
 function setPromoCodeReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_PROMO_CODE: {
-      return {
-        ...state,
-        validPromoCode: true,
-        promocode: action.code
-      };
+      let newState = _.cloneDeep(state);
+      newState.validPromoCode = true;
+      newState.promocode = action.code;
+      console.group(
+        'newState in applyCouponCode ' + actionTypes.SET_PROMO_CODE
+      );
+      console.log(newState);
+      console.groupEnd(
+        'newState in applyCouponCode ' + actionTypes.SET_PROMO_CODE
+      );
+
+      return newState;
     }
     default: {
       return {

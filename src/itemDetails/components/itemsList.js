@@ -34,6 +34,9 @@ class ItemsList extends Component {
 function mapStateToProps(state) {
   let promocode = _.get(state, 'couponCode.validPromoCode') || false;
   let itemsList = _.get(state, 'itemsList.items');
+  if (!itemsList) {
+    itemsList = _.get(state, 'itemsList.state.items');
+  }
   return {
     promocode,
     itemsList
