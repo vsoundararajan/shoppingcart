@@ -11,9 +11,6 @@ import ItemDetailsContainer from '../../itemDetails/components/itemDetailsContai
 class CartTotal extends Component {
   constructor(props) {
     super(props);
-    console.group('props at CartTotal constructor');
-    console.log(props);
-    console.groupEnd('props at CartTotal constructor');
     this.state = {
       subTotal: 102.96,
       pickupSavings: 3.85,
@@ -57,7 +54,6 @@ class CartTotal extends Component {
     return subTotal;
   }
   render() {
-    console.log('rendering CartTotal');
     let subTotal = this.getSubtotal();
     let total = 0;
     if (this.props.promocode) {
@@ -121,7 +117,6 @@ class CartTotal extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   let promocode = _.get(state, 'couponCode.validPromoCode') || false;
   let itemsList = _.get(state, 'itemsList.items');
   if (!itemsList) {

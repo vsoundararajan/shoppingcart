@@ -11,9 +11,6 @@ class ItemsList extends Component {
     for (let i = 0; i < 3; i++) {
       let item = { ...items[i] };
       let message = item['modelName'];
-      console.group('item[image] at ItemsList');
-      console.log(item);
-      console.groupEnd('item[image] at ItemsList');
       renderItems.push(
         <CollapseComp
           image={item['image']}

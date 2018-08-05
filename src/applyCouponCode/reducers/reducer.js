@@ -12,13 +12,6 @@ function setPromoCodeReducer(state = initialState, action) {
       let newState = _.cloneDeep(state);
       newState.validPromoCode = true;
       newState.promocode = action.code;
-      console.group(
-        'newState in applyCouponCode ' + actionTypes.SET_PROMO_CODE
-      );
-      console.log(newState);
-      console.groupEnd(
-        'newState in applyCouponCode ' + actionTypes.SET_PROMO_CODE
-      );
 
       return newState;
     }

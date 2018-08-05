@@ -7,12 +7,6 @@ function initItemsReducer(state = {}, action) {
     case actionTypes.INIT_ITEMS: {
       let newState = _.cloneDeep(state);
       newState.items = items;
-      console.group('newState in initItemsReducer ' + actionTypes.INIT_ITEMS);
-      console.log(newState);
-      console.groupEnd(
-        'newState in initItemsReducer ' + actionTypes.INIT_ITEMS
-      );
-
       return newState;
     }
     default: {
