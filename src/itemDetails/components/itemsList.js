@@ -6,14 +6,14 @@ import { CollapseComp } from '../../utils/components/collapseComp';
 
 class ItemsList extends Component {
   render() {
-    console.group('props at ItemsList render');
-    console.log(this.props);
-    console.groupEnd('props at ItemsList render');
     const items = { ...this.props.itemsList };
     const renderItems = [];
     for (let i = 0; i < 3; i++) {
-      let message = `item${i + 1}`;
       let item = { ...items[i] };
+      let message = item['modelName'];
+      console.group('item[image] at ItemsList');
+      console.log(item);
+      console.groupEnd('item[image] at ItemsList');
       renderItems.push(
         <CollapseComp
           image={item['image']}
@@ -33,7 +33,7 @@ class ItemsList extends Component {
 
 function mapStateToProps(state) {
   let promocode = _.get(state, 'couponCode.validPromoCode') || false;
-  let itemsList = _.get(state, 'state.itemsList.items');
+  let itemsList = _.get(state, 'itemsList.items');
   return {
     promocode,
     itemsList

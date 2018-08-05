@@ -6,7 +6,7 @@ export class ItemDetails extends Component {
       <div style={{ width: '500px' }}>
         <div style={{ float: 'left', width: '100px' }}>
           <img
-            src="/images/walmartChair.png"
+            src={this.props.image}
             style={{ width: '100px', height: 'auto' }}
             alt="OFM ESS-3085 Chair"
           />

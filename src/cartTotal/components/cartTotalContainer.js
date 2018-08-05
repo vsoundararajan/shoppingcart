@@ -11,6 +11,9 @@ import { ItemDetailsContainer } from '../../itemDetails/components/itemDetailsCo
 class CartTotal extends Component {
   constructor(props) {
     super(props);
+    console.group('props at CartTotal constructor');
+    console.log(props);
+    console.groupEnd('props at CartTotal constructor');
     this.state = {
       subTotal: 102.96,
       pickupSavings: 3.85,
@@ -21,21 +24,21 @@ class CartTotal extends Component {
   componentWillMount() {
     const items = [
       {
-        image: '/images/abcd.png',
+        image: '/images/walmartChair.png',
         modelName: 'OFM ESS-3085',
         price: 99.99,
         description:
           'Essentials bu OFM ESS-3085 Racin style leather Gamimg chair Red $99.99'
       },
       {
-        image: '/images/efgh.png',
+        image: '/images/whiteChair.jpeg',
         modelName: 'OFM ESS-3086',
         price: 199.99,
         description:
           'Essentials bu OFM ESS-3086 Racin style leather Gamimg chair Blue $199.99'
       },
       {
-        image: '/images/efgh.png',
+        image: '/images/redChair.jpeg',
         modelName: 'OFM ESS-3087',
         price: 179.99,
         description:
@@ -54,6 +57,7 @@ class CartTotal extends Component {
     return subTotal;
   }
   render() {
+    console.log('rendering CartTotal');
     let subTotal = this.getSubtotal();
     let toolTip =
       'Pick up your order in the store help cut costs, and we pass the savings on to you.';
@@ -73,6 +77,18 @@ class CartTotal extends Component {
           showToolTip={true}
           toolTip={toolTip}
         />
+        <br />
+        <LineItem
+          description={'Promo Code discount'}
+          amount={
+            this.props.promocode === false
+              ? (subTotal * 0.1).toFixed(2)
+              : (0.0).toFixed(2)
+          }
+          textDecoration={false}
+          showToolTip={false}
+        />
+        <br />
         <LineItem
           description={'Tax and Fees'}
           amount={this.state.taxNfees}
@@ -96,6 +112,7 @@ class CartTotal extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   let promocode = _.get(state, 'couponCode.validPromoCode') || false;
   let itemsList = _.get(state, 'itemsList.items');
   return {
