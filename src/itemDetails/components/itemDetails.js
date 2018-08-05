@@ -19,7 +19,7 @@ export class ItemDetails extends Component {
             color: '#696969'
           }}
         >
-          Essentials bu OFM ESS-3085 Racin style leather Gamimg chair Red $99.99
+          {this.props.description}
         </div>
         <br style={{ clear: 'left' }} />
       </div>

@@ -25,7 +25,20 @@ export class CollapseComp extends Component {
     }
     this.setState({ message: message });
   }
-
+  renderItems() {
+    if (this.props.itemDetails) {
+      return (
+        <ItemDetails
+          image={this.props.image}
+          description={this.props.description}
+          modelName={this.props.modelName}
+          price={this.props.price}
+        />
+      );
+    } else {
+      return <CouponForm />;
+    }
+  }
   render() {
     return (
       <div>
@@ -37,7 +50,7 @@ export class CollapseComp extends Component {
           {this.state.message}
         </p>
         <div className="content" ref={this.contents}>
-          {this.props.itemDetails ? <ItemDetails /> : <CouponForm />}
+          {this.renderItems()}
         </div>
       </div>
     );

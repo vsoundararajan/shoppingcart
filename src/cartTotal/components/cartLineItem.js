@@ -22,8 +22,6 @@ function getDesctription(props) {
 }
 
 function LineItem(props) {
-  console.log(props);
-
   return (
     <p>
       {getDesctription(props)}

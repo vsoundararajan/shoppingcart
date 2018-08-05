@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { initializeItems as initializeItemsAction } from '../../itemDetails/actions/actions';
+
 import LineItem from './cartLineItem';
 import { ItemDetailsContainer } from '../../itemDetails/components/itemDetailsContainer';
 
-export class CartTotal extends Component {
+class CartTotal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,14 +17,51 @@ export class CartTotal extends Component {
       taxNfees: 8.92
     };
   }
+
+  componentWillMount() {
+    const items = [
+      {
+        image: '/images/abcd.png',
+        modelName: 'OFM ESS-3085',
+        price: 99.99,
+        description:
+          'Essentials bu OFM ESS-3085 Racin style leather Gamimg chair Red $99.99'
+      },
+      {
+        image: '/images/efgh.png',
+        modelName: 'OFM ESS-3086',
+        price: 199.99,
+        description:
+          'Essentials bu OFM ESS-3086 Racin style leather Gamimg chair Blue $199.99'
+      },
+      {
+        image: '/images/efgh.png',
+        modelName: 'OFM ESS-3087',
+        price: 179.99,
+        description:
+          'Essentials bu OFM ESS-3087 Racin style leather Gamimg chair White $179.99'
+      }
+    ];
+    this.props.initializeItems(items);
+  }
+  getSubtotal() {
+    const items = { ...this.props.itemsList };
+    let subTotal = 0;
+    for (let i = 0; i < 3; i++) {
+      let item = { ...items[i] };
+      subTotal += item['price'];
+    }
+    return subTotal;
+  }
   render() {
+    let subTotal = this.getSubtotal();
     let toolTip =
       'Pick up your order in the store help cut costs, and we pass the savings on to you.';
     return (
       <div className="cartTotal">
         <LineItem
           description={'Sub Total'}
-          amount={this.state.subTotal}
+          amount={subTotal}
           textDecoration={false}
           showToolTip={false}
         />
@@ -40,9 +83,7 @@ export class CartTotal extends Component {
         <hr />
         <LineItem
           description={'Total'}
-          amount={
-            this.state.subTotal + this.state.taxNfees - this.state.pickupSavings
-          }
+          amount={subTotal + this.state.taxNfees - this.state.pickupSavings}
           textDecoration={false}
           showToolTip={false}
           bold={true}
@@ -53,3 +94,28 @@ export class CartTotal extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  let promocode = _.get(state, 'couponCode.validPromoCode') || false;
+  let itemsList = _.get(state, 'itemsList.items');
+  return {
+    promocode,
+    itemsList
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      initializeItems: initializeItemsAction
+    },
+    dispatch
+  );
+}
+
+CartTotal.propTypes = {
+  promocode: PropTypes.bool.isRequired,
+  itemsList: PropTypes.array.isRequired
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartTotal);

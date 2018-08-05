@@ -5,9 +5,6 @@ import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 import { setPromoCode as setPromoCodeAction } from '../actions/actions';
 
-console.group('setPromoCodeAction');
-console.log(setPromoCodeAction);
-console.groupEnd('setPromoCodeAction');
 class CouponForm extends Component {
   costructor(props) {
     this.setState({ promocode: '' });
@@ -44,10 +41,6 @@ class CouponForm extends Component {
 
 function mapStateToProps(state) {
   let promocode = _.get(state, 'couponCode.state.state');
-  console.group('--promocode--');
-  console.log(state);
-  console.log(promocode);
-  console.groupEnd('--promocode--');
   return {
     promocode
   };

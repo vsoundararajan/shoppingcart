@@ -7,9 +7,6 @@ const initialState = {
 };
 
 function setPromoCodeReducer(state = initialState, action) {
-  console.group('action at setPromoCodeReducer');
-  console.log(action);
-  console.groupEnd('action at setPromoCodeReducer');
   switch (action.type) {
     case actionTypes.SET_PROMO_CODE: {
       return {
